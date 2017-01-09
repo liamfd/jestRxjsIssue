@@ -1,5 +1,3 @@
-// const defineLazyObjectProperty = require('defineLazyObjectProperty');
-
 function defineLazyObjectProperty<T>(
   object: Object,
   name: string,
@@ -48,9 +46,8 @@ function defineLazyObjectProperty<T>(
 
 
 const defineLazyTimer = name => {
-  const jsTimers = jsTimers || require('../MyJSTimers');
   defineLazyObjectProperty(global, name, {
-    get: () => jsTimers[name],
+    get: () => require('../MyJSTimers')[name],
     writable: true,
     enumerable: true,
   });
