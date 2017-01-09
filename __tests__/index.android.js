@@ -16,16 +16,23 @@
 // import 'react-native';
 import thing from 'react-native/Libraries/Core/initializeCore'; // <- adds to global @ 137
 // it tries to do the same with cAF, but doesn't seem to be working
+// something to do with defineLazyObjectProperty
+// the CB in defineLazyTimer is undefined for raf the first time its called. if you reference raf, it gets called again, and is defined
+// however, if you call caf, that cb is not called again, just throws errors
 
+// in defineLazyTimer, setValue gets called an extra time
 
 // Note: test renderer must be required after react-native.
+
+console.log(global.requestAnimationFrame);
+console.log(global.cancelAnimationFrame);
+
 
 it('renders correctly', () => {
   // console.log('raf:', global.requestAnimationFrame)
   // console.log('caf:', global.cancelAnimationFrame)
   // if (typeof thing !== 'undefined') console.log('thing:', thing);
 
-  // console.log(global.requestAnimationFrame());
   // console.log(global.cancelAnimationFrame());
 
 
