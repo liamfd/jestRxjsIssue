@@ -48,14 +48,15 @@ function defineLazyObjectProperty<T>(
 
 
 const defineLazyTimer = name => {
+  const jsTimers = jsTimers || require('../MyJSTimers');
   defineLazyObjectProperty(global, name, {
-    get: () => require('../MyJSTimers')[name],
+    get: () => jsTimers[name],
     writable: true,
     enumerable: true,
   });
 };
-defineLazyTimer('cancelAnimationFrame');
 defineLazyTimer('requestAnimationFrame');
+defineLazyTimer('cancelAnimationFrame');
 
 it('has a defined requestAnimationFrame', () => {
   if (global.requestAnimationFrame) console.log(global.requestAnimationFrame());

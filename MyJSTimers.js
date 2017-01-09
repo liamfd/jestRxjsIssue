@@ -1,8 +1,8 @@
 module.exports = {
   requestAnimationFrame: function() {
-    console.log('this is it!!!');
+    console.log('this is request!');
   },
   cancelAnimationFrame: function() {
-    console.log('this the other one');
+    console.log('this is cancel!');
   }
 }
