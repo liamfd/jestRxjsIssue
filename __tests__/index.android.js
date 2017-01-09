@@ -1,43 +1,26 @@
-// NOT ADDING RAF TO GLOBAL:
-// import rx from 'rxjs';
-// import React from 'react';
-// import Index from '../index.android.js';
-// import renderer from 'react-test-renderer';
-// var requestAnimationFrame = require('fbjs/lib/requestAnimationFrame');
-// var thing = require('react-native/Libraries/Animated/src/AnimatedImplementation');
-// var requestAnimationFrame = require('fbjs');
-// var thing = require('fbjs/lib/nativeRequestAnimationFrame');
-// var thing = require('react-native/ReactAndroid');
+// require('react-native');
 
-// CONTAINS THE CULPRIT, DOES NOT ADD RAF TO GLOBAL
-// import thing from 'react-native/Libraries/Core/Timers/JSTimers'; // <- defines it @ 108
+const defineLazyObjectProperty = require('defineLazyObjectProperty');
 
-// ADDING RAF TO GLOBAL
-// import 'react-native';
-import thing from 'react-native/Libraries/Core/initializeCore'; // <- adds to global @ 137
-// it tries to do the same with cAF, but doesn't seem to be working
-// something to do with defineLazyObjectProperty
-// the CB in defineLazyTimer is undefined for raf the first time its called. if you reference raf, it gets called again, and is defined
-// however, if you call caf, that cb is not called again, just throws errors
+const defineLazyTimer = name => {
+  defineLazyObjectProperty(global, name, {
+    get: () => {
+      const thing = require('JSTimers')[name];
+      if (name === 'requestAnimationFrame') debugger;
 
-// in defineLazyTimer, setValue gets called an extra time
+      return thing;
+    },
+    enumerable: true,
+    writable: true,
+  });
+};
+defineLazyTimer('requestAnimationFrame');
+defineLazyTimer('cancelAnimationFrame');
 
-// Note: test renderer must be required after react-native.
+it('has a defined requestAnimationFrame', () => {
+  expect(global.requestAnimationFrame).toBeDefined();
+});
 
-console.log(global.requestAnimationFrame);
-console.log(global.cancelAnimationFrame);
-
-
-it('renders correctly', () => {
-  // console.log('raf:', global.requestAnimationFrame)
-  // console.log('caf:', global.cancelAnimationFrame)
-  // if (typeof thing !== 'undefined') console.log('thing:', thing);
-
-  // console.log(global.cancelAnimationFrame());
-
-
-
-  // const tree = renderer.create(
-  //   <Index />
-  // );
+it('has a defined cancelAnimationFrame', () => {
+  expect(global.cancelAnimationFrame).toBeDefined();
 });

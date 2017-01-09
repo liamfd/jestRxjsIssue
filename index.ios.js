@@ -14,6 +14,7 @@ import {
 
 export default class jestRxjsIssue extends Component {
   render() {
+    console.log('g', global.cancelAnimationFrame);
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
