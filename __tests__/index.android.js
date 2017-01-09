@@ -4,12 +4,7 @@ const defineLazyObjectProperty = require('defineLazyObjectProperty');
 
 const defineLazyTimer = name => {
   defineLazyObjectProperty(global, name, {
-    get: () => {
-      const thing = require('JSTimers')[name];
-      if (name === 'requestAnimationFrame') debugger;
-
-      return thing;
-    },
+    get: () => require('JSTimers')[name],
     enumerable: true,
     writable: true,
   });
