@@ -20,6 +20,8 @@ function defineLazyObjectProperty<T>(
     // `getValue` again. Adding `valueSet` breaks this loop.
 
     if (!valueSet) {
+      debugger;
+
       setValue(get());
     }
     return get();
@@ -27,6 +29,8 @@ function defineLazyObjectProperty<T>(
   function setValue(newValue: T): void {
     value = newValue;
     valueSet = true;
+
+    debugger;
 
     Object.defineProperty(object, name, {
       value: newValue,
@@ -53,7 +57,7 @@ const defineLazyTimer = name => {
   });
 };
 defineLazyTimer('requestAnimationFrame');
-defineLazyTimer('cancelAnimationFrame');
+// defineLazyTimer('cancelAnimationFrame');
 
 it('has a defined requestAnimationFrame', () => {
   if (global.requestAnimationFrame) console.log(global.requestAnimationFrame());
