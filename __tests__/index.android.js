@@ -1,4 +1,5 @@
-import 'react-native'; // <- adds to global @ 137
+import 'react-native';
+// import 'rxjs'; // uncommenting this line will cause the entire test to fail
 
 it('has a defined requestAnimationFrame', () => {
   if (global.requestAnimationFrame) global.requestAnimationFrame();
