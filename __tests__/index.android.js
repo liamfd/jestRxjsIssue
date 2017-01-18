@@ -56,15 +56,17 @@ const defineLazyTimer = name => {
     enumerable: true,
   });
 };
+defineLazyTimer('cancelAnimationFrame');
 defineLazyTimer('requestAnimationFrame');
-// defineLazyTimer('cancelAnimationFrame');
 
-it('has a defined requestAnimationFrame', () => {
-  if (global.requestAnimationFrame) console.log(global.requestAnimationFrame());
-  expect(global.requestAnimationFrame).toBeDefined(); // passes
+// switching the order of the references switches which one of these gets properly defined.
+// the first one REFERENCED goes through, the rest dont.
+it('has a defined cancelAnimationFrame', () => {
+  if (global.cancelAnimationFrame) global.cancelAnimationFrame();
+  expect(global.cancelAnimationFrame).toBeDefined(); // fails
 });
 
-it('has a defined cancelAnimationFrame', () => {
-  if (global.cancelAnimationFrame) console.log(global.cancelAnimationFrame());
-  expect(global.cancelAnimationFrame).toBeDefined(); // fails
+it('has a defined requestAnimationFrame', () => {
+  if (global.requestAnimationFrame) global.requestAnimationFrame();
+  expect(global.requestAnimationFrame).toBeDefined(); // passes
 });
