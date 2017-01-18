@@ -1,3 +1,4 @@
+// grabbed from https://github.com/facebook/react-native/blob/a6844bdf7589b38297328e69f61e2986a129ab30/Libraries/Utilities/defineLazyObjectProperty.js
 function defineLazyObjectProperty(
   object,
   name,
@@ -40,7 +41,7 @@ function defineLazyObjectProperty(
   });
 }
 
-
+// based on https://github.com/facebook/react-native/blob/4252ac75eaf04aa9d57027e91bf7665717ed4eab/Libraries/Core/InitializeCore.js#L129
 const defineLazyTimer = name => {
   defineLazyObjectProperty(global, name, {
     get: () => require('../MyJSTimers')[name],
