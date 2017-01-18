@@ -1,4 +1,4 @@
-import 'react-native/Libraries/Core/initializeCore'; // <- adds to global @ 137
+import 'react-native'; // <- adds to global @ 137
 
 it('has a defined requestAnimationFrame', () => {
   if (global.requestAnimationFrame) global.requestAnimationFrame();
